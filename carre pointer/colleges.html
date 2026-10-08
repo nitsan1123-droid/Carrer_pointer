@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p class="eyebrow">College finder</p>
+<h1>Colleges that fit your budget</h1>
+
+<form class="card filters">
+  <label>Country
+    <select name="country">
+      <option value="All">All countries</option>
+      {% for c in countries %}
+      <option value="{{ c }}" {{ 'selected' if c == country }}>{{ c }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>Stream
+    <select name="stream">
+      <option value="All">All streams</option>
+      {% for s in streams %}
+      <option value="{{ s }}" {{ 'selected' if s == stream }}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>Max budget per year (USD)
+    <input type="number" name="budget" min="0" step="500" placeholder="e.g. 10000" value="{{ budget }}">
+  </label>
+
+  <button class="btn">Search</button>
+</form>
+
+<p class="muted">{{ results|length }} colleges found, cheapest first</p>
+<br>
+
+<div class="grid">
+  {% for college in results %}
+  <div class="card">
+    <p class="eyebrow">{{ college.country }}</p>
+    <h3>{{ college.name }}</h3>
+    <p class="price">${{ "{:,}".format(college.fee_usd) }} <span class="muted">/ year</span></p>
+    <p class="tags">{% for s in college.streams %}<span>{{ s }}</span>{% endfor %}</p>
+    <br>
+    <a href="{{ college.link }}" target="_blank" class="gradient">Official website</a>
+  </div>
+  {% else %}
+  <p class="muted">No match. Try a bigger budget or all countries.</p>
+  {% endfor %}
+</div>
+{% endblock %}

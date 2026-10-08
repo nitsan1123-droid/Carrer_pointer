@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Your best match</p>
+  <h1 class="gradient">{{ best }}</h1>
+  <p class="lead">{{ percents[best] }}% of your answers point to {{ best }}.</p>
+</section>
+
+<div class="charts">
+  <div class="card">
+    <h3>Match breakdown</h3>
+    <div class="pie" style="background: conic-gradient({{ pie }})">
+      <div class="pie-hole">
+        <h2>{{ percents[best] }}%</h2>
+      </div>
+    </div>
+    {% for stream, points in ranking %}
+    <p><span class="dot" style="background: {{ colors[stream] }}"></span>{{ stream }}: {{ percents[stream] }}%</p>
+    {% endfor %}
+  </div>
+
+  <div class="card">
+    <h3>Score by stream</h3>
+    <p class="muted">Points out of {{ total }} questions</p>
+    {% for stream in scores %}
+    <div class="bar-row">
+      <span>{{ stream }}</span>
+      <div class="bar"><div style="width: {{ scores[stream] * 100 / total }}%; background: {{ colors[stream] }}"></div></div>
+      <b>{{ scores[stream] }}</b>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<section class="section">
+  <h2>Jobs you might love</h2>
+  <div class="grid">
+    {% for career in matches %}
+    <div class="card">
+      <h3>{{ career.name }}</h3>
+      <p class="muted">{{ career.about }}</p>
+      <p class="tags">{% for skill in career.skills %}<span>{{ skill }}</span>{% endfor %}</p>
+    </div>
+    {% endfor %}
+  </div>
+  <p class="section">
+    <a class="btn" href="{{ url_for('colleges', stream=best) }}">Find colleges for {{ best }}</a>
+    <a class="btn btn-ghost" href="{{ url_for('quiz') }}">Retake quiz</a>
+  </p>
+</section>
+
+<section class="section">
+  <h2>What you answered</h2>
+  {% for a in chosen %}
+  <div class="card answer" style="border-left-color: {{ colors[a.stream] }}">
+    <p class="muted">{{ loop.index }}. {{ a.question }}</p>
+    <p>{{ a.text }}</p>
+  </div>
+  {% endfor %}
+</section>
+{% endblock %}

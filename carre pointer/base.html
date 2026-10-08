@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrer Pointer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('stylesheet') }}">
+</head>
+<body>
+  <header class="nav">
+    <a href="{{ url_for('home') }}" class="logo">Carrer <span class="gradient">Pointer</span></a>
+    <nav class="links">
+      <a href="{{ url_for('quiz') }}">Quiz</a>
+      <a href="{{ url_for('careers') }}">Careers</a>
+      <a href="{{ url_for('colleges') }}">Colleges</a>
+    </nav>
+    <a href="{{ url_for('quiz') }}" class="btn">Get started</a>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    © 2026 Carrer Pointer · Fees are rough yearly estimates. Always check the college's official website.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="quiz">
+  <p class="eyebrow">Question {{ step + 1 }} of {{ total }}</p>
+  <div class="progress"><div style="width: {{ progress }}%"></div></div>
+  <h2>{{ question }}</h2>
+
+  <form method="post">
+    <input type="hidden" name="answers" value="{{ answers }}">
+    <div class="options">
+      {% for index, answer in options %}
+      <button name="answer" value="{{ index }}" class="option"><b>{{ "ABCDEF"[loop.index0] }}</b>{{ answer[0] }}</button>
+      {% endfor %}
+    </div>
+    {% if step > 0 %}
+    <button name="back" value="1" class="btn btn-ghost">Back</button>
+    {% endif %}
+  </form>
+</section>
+{% endblock %}

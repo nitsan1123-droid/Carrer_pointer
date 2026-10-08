@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">For students everywhere</p>
+  <h1>Point your future<br><span class="gradient">in the right direction.</span></h1>
+  <p class="lead">Discover your stream, explore careers, and find universities around the world that fit your budget.</p>
+
+  <form class="search" action="{{ url_for('careers') }}">
+    <input type="text" name="q" placeholder="Search a career, like Doctor">
+    <button class="btn">Search</button>
+  </form>
+
+  <a href="{{ url_for('quiz') }}" class="btn">Take the quiz</a>
+  <a href="{{ url_for('colleges') }}" class="btn btn-ghost">Browse colleges</a>
+
+  <div class="stats">
+    <p><strong>{{ counts.careers }}</strong>Careers</p>
+    <p><strong>{{ counts.colleges }}</strong>Universities</p>
+    <p><strong>{{ counts.countries }}</strong>Countries</p>
+  </div>
+</section>
+
+<section class="section">
+  <p class="eyebrow">Explore</p>
+  <h2>Pick a stream</h2>
+  <div class="grid">
+    {% for stream in streams %}
+    <a class="card" href="{{ url_for('careers', stream=stream) }}" style="border-top: 3px solid {{ colors[stream] }}">
+      <h3>{{ stream }}</h3>
+      <p class="muted">{{ stream_counts[stream] }} careers to explore</p>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p class="eyebrow">Careers</p>
+<h1>Explore careers</h1>
+
+<form class="search" action="{{ url_for('careers') }}">
+  <input type="text" name="q" value="{{ query }}" placeholder="Search careers or skills">
+  <button class="btn">Search</button>
+</form>
+
+<div class="chips">
+  <a href="{{ url_for('careers') }}" class="{{ 'active' if chosen == 'All' }}">All</a>
+  {% for stream in streams %}
+  <a href="{{ url_for('careers', stream=stream) }}" class="{{ 'active' if chosen == stream }}">{{ stream }}</a>
+  {% endfor %}
+</div>
+
+<div class="grid">
+  {% for career in careers %}
+  <div class="card">
+    <p class="eyebrow" style="color: {{ colors[career.stream] }}">{{ career.stream }}</p>
+    <h3>{{ career.name }}</h3>
+    <p class="muted">{{ career.about }}</p>
+    <p class="tags">{% for skill in career.skills %}<span>{{ skill }}</span>{% endfor %}</p>
+  </div>
+  {% else %}
+  <p class="muted">No careers found. Try another word.</p>
+  {% endfor %}
+</div>
+{% endblock %}
